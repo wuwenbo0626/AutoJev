@@ -4,9 +4,10 @@ import csv
 import hashlib
 import json
 import random
+from collections.abc import Iterable
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 QUESTION_TYPES = {"choice", "score", "noul"}
 
@@ -61,7 +62,7 @@ def _normalise_target(question_type: str, criteria: Any, answer: Any) -> list[fl
                 raise ValueError(f"choice label {label!r} is not in criteria")
             target = [1.0 if key == label else 0.0 for key in option_keys]
         elif question_type == "score":
-            index = int(round(float(answer)))
+            index = round(float(answer))
             if not 0 <= index < len(option_keys):
                 raise ValueError(f"score label {index} is outside 0..{len(option_keys) - 1}")
             target = [1.0 if i == index else 0.0 for i in range(len(option_keys))]
@@ -94,7 +95,7 @@ def _expand_systemone(row: dict[str, Any], row_number: int) -> Iterable[Decision
     questions = _jsonish(row.get("questions"))
     answers = _jsonish(row.get("answers", row.get("gold")))
     if not isinstance(questions, dict) or not isinstance(answers, dict):
-        raise ValueError("systemone rows require object-valued questions and answers/gold")
+        raise TypeError("systemone rows require object-valued questions and answers/gold")
     group_id = str(row.get("group_id", row.get("id", f"row-{row_number}")))
     for question_id, question in questions.items():
         if question_id not in answers:
@@ -211,4 +212,3 @@ def write_prepared(splits: dict[str, list[DecisionRecord]], output_dir: str | Pa
 def read_prepared(path: str | Path) -> list[DecisionRecord]:
     with Path(path).open(encoding="utf-8") as handle:
         return [DecisionRecord(**json.loads(line)) for line in handle if line.strip()]
-

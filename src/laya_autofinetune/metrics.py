@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+from itertools import pairwise
 from typing import Any
 
 import numpy as np
@@ -21,7 +22,7 @@ def classification_metrics(probabilities: list[np.ndarray], targets: list[np.nda
     ece = 0.0
     conf = np.asarray(confidence)
     corr = np.asarray(correct)
-    for index, (low, high) in enumerate(zip(edges[:-1], edges[1:])):
+    for index, (low, high) in enumerate(pairwise(edges)):
         selected = (conf >= low if index == 0 else conf > low) & (conf <= high)
         if selected.any():
             ece += float(selected.mean() * abs(conf[selected].mean() - corr[selected].mean()))
@@ -34,4 +35,3 @@ def classification_metrics(probabilities: list[np.ndarray], targets: list[np.nda
         "mean_confidence": float(np.mean(confidence)),
         "finite": all(math.isfinite(value) for value in nll + brier),
     }
-

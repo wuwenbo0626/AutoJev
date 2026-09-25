@@ -12,7 +12,7 @@ from typing import Any
 import numpy as np
 
 from .config import TrainConfig
-from .data import DecisionRecord, read_prepared
+from .data import read_prepared
 from .metrics import classification_metrics
 
 

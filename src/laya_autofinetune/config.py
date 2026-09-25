@@ -46,7 +46,7 @@ class TrainConfig:
             raise ValueError("epochs, batch_size, grad_accum and group_size must be positive")
 
     @classmethod
-    def from_json(cls, path: str | Path | None) -> "TrainConfig":
+    def from_json(cls, path: str | Path | None) -> TrainConfig:
         if path is None:
             cfg = cls()
         else:
@@ -61,4 +61,3 @@ class TrainConfig:
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
-
