@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "laya-auto-finetune"
+version = "0.1.0"
+description = "Automated Jev-style decision model training based on Laya"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+dependencies = [
+  "laya>=0.3.20",
+  "torch>=2.2",
+  "transformers>=4.46",
+  "safetensors>=0.4",
+  "huggingface-hub>=0.27",
+  "numpy>=1.26",
+]
+
+[project.urls]
+Homepage = "https://github.com/wuwenbo0626/AutoJev"
+Repository = "https://github.com/wuwenbo0626/AutoJev"
+Issues = "https://github.com/wuwenbo0626/AutoJev/issues"
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.9"]
+
+[project.scripts]
+laya-autofinetune = "laya_autofinetune.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/laya_autofinetune"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100

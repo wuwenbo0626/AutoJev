@@ -1,0 +1,4 @@
+{"id":"case-001","state":{"conversation":[{"role":"customer","text":"钱扣了两次，订单却没生成"}]},"questions":{"intent":{"type":"choice","instructions":"用户的主要诉求是什么？","criteria":{"duplicate_charge":"同一笔交易被重复扣款","missing_order":"付款成功后没有生成订单","refund":"明确要求退款"}},"urgent":{"type":"noul","instructions":"是否需要立即升级人工？"}},"answers":{"intent":{"choice":"duplicate_charge"},"urgent":{"noul":true}}}
+{"id":"case-002","state":"包裹显示签收，但我根本没有收到","questions":{"intent":{"type":"choice","instructions":"用户的主要诉求是什么？","criteria":{"duplicate_charge":"同一笔交易被重复扣款","missing_order":"付款成功后没有生成订单","logistics":"发货、运输或签收异常"}}},"answers":{"intent":{"choice":"logistics"}}}
+{"id":"case-003","state":"这个商品不合适，我想原路退款","questions":{"intent":{"type":"choice","instructions":"用户的主要诉求是什么？","criteria":{"refund":"明确要求退款","replacement":"要求换货","information":"仅咨询信息"}}},"answers":{"intent":{"choice":"refund"}}}
+
